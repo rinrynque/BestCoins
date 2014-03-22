@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1395528545 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
+	<time.h>
+	<fstream>
+	"blockchain.h"
+
+1395523497 c:\users\vianney\documents\perso\projets\bestcoins\blockchain.h
+	<vector>
+	<iostream>
+	<gmpxx.h>
+	"rsa.h"
+
+1395529288 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
+	<gmpxx.h>
+
+1395529288 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
+	"rsa.h"
+
