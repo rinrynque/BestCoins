@@ -32,11 +32,17 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="C:/gmp/.libs" />
+			<Add directory="C:/db-6.0.30.NC/build_unix/.libs" />
+			<Add directory="C:/Boost_1_55_0" />
 		</Compiler>
 		<Linker>
 			<Add option="-lgmpxx" />
 			<Add option="-lgmp" />
+			<Add option="-ldb-6.0" />
+			<Add option="-lboost_serialization" />
+			<Add directory="C:/db-6.0.30.NC/build_unix/.libs" />
 		</Linker>
+		<Unit filename="blockchain.cpp" />
 		<Unit filename="blockchain.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rsa.cpp" />

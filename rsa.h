@@ -1,22 +1,44 @@
-#ifndef RSA_H_INCLUDED
+/*#ifndef RSA_H_INCLUDED
 #define RSA_H_INCLUDED
-
+*/
 #include <gmpxx.h>
 
-struct keyPair
+#define KEY_SIZE 1024 //en bits, à prendre supérieur à 512
+#define PRIM_SIZE KEY_SIZE/2
+
+class rsaPrivKey
 {
-    mpz_class rsaModulus;
-    mpz_class rsaPublicKey;
-    mpz_class rsaPrivateKey;
+public :
+    rsaPrivKey();
+    ~rsaPrivKey();
+
+    mpz_class deCrypt(const mpz_class C);
+    mpz_class sign(const mpz_class M);
+
+    void setValue(mpz_class E, mpz_class N = -1);
+
+private:
+    mpz_class mod;
+    mpz_class value;
 };
 
-keyPair generateKeys();
+class rsaPubKey
+{
+public:
+    rsaPubKey();
+    ~rsaPubKey();
 
-mpz_class crypt(mpz_class M, keyPair keys);
-mpz_class deCrypt(mpz_class C, keyPair keys);
+    mpz_class crypt(const mpz_class M);
+    mpz_class authenticate(const mpz_class S);
 
-mpz_class sign(mpz_class M, keyPair keys);
-mpz_class authenticate(mpz_class S, keyPair keys);
+    void setValue(mpz_class D, mpz_class N = -1);
+
+private :
+    mpz_class mod;
+    mpz_class value;
+};
+
+void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey);
 
 
-#endif // RSA_H_INCLUDED
+//#endif // RSA_H_INCLUDED

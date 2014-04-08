@@ -4,11 +4,13 @@
 #include <vector>
 #include <iostream>
 #include <gmpxx.h>
-#include "rsa.h"
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+
 
 struct OutPoint
 {
-    uint64_t txNumber;
+    uint64_t txHash;
     uint32_t index;
 };
 
@@ -27,20 +29,21 @@ struct Tx_out
 
 struct Tx
 {
-    uint32_t in_count;
+    bool validate();
+
     std::vector <Tx_in> inputs;
-    uint32_t out_count;
     std::vector <Tx_out> outputs;
 
 };
 
 struct Block
 {
-    uint64_t prevBlock;
+    bool validate();
+
+    uint64_t prevHash;
     uint32_t timestamp;
     uint32_t nonce;
     std::vector <Tx> txns;
 };
-
 
 #endif // BLOCKCHAIN_H_INCLUDED
