@@ -17,7 +17,8 @@ rsaPubKey::rsaPubKey()
 }
 rsaPubKey::~rsaPubKey()
 {
-
+    mod.~__gmp_expr();
+    value.~__gmp_expr();
 }
 
 void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey)
