@@ -23,7 +23,8 @@ int main(int argc, char **argv)
         oa << privKey;
     	// archive and stream closed when destructors are called
     }
-    mpz_class A(6235);
+    mpz_class A(6);
+    std::cout << "5:" << privKey.deCrypt(pubKey.crypt(5));
     privKey.setValue(A, 0);
     {
         std::cout << "lol ca plante" ;
@@ -34,7 +35,8 @@ int main(int argc, char **argv)
         ia >> privKey;
         // archive and stream closed when destructors are called
     }
-
+    /*std::cout << "\n Cle publique :" << privKey
+    << "\n Cle privee : " << pubKey;*/
     mpz_class M = 349;
     mpz_class C = pubKey.crypt(M);
 

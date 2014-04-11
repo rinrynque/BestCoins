@@ -17,8 +17,6 @@ rsaPubKey::rsaPubKey()
 }
 rsaPubKey::~rsaPubKey()
 {
-    mod.~__gmp_expr();
-    value.~__gmp_expr();
 }
 
 void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey)
@@ -59,20 +57,9 @@ void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey)
 
     pubKey.setValue(D,N);
     privKey.setValue(E,N);
-}
 
-void rsaPrivKey::setValue(mpz_class E, mpz_class N)
-{
-    value = E;
-    if(N != 0)
-        mod = N;
-}
-
-void rsaPubKey::setValue(mpz_class D, mpz_class N)
-{
-    value = D;
-    if(N != 0)
-        mod = N;
+    std::cout << "\ntaille de la cle publique : "<< mpz_sizeinbase(D.get_mpz_t(), 2);
+    std::cout << "\ntaille de la cle privee : "<< mpz_sizeinbase(E.get_mpz_t(), 2);
 }
 
 mpz_class rsaPubKey::crypt(const mpz_class M)
@@ -102,4 +89,30 @@ mpz_class rsaPubKey::authenticate(const mpz_class S)
     mpz_class M;
     mpz_powm(M.get_mpz_t(), S.get_mpz_t(), value.get_mpz_t(), mod.get_mpz_t());
     return M;
+}
+
+
+std::string deCrypt(std::string c_message)
+{
+    std::string d_message;
+    for(int i = 0; i < c_message.length(); i++)
+    {
+    }
+    return d_message;
+}
+std::string sign(std::string message)
+{
+    std::string certificate;
+    return certificate;
+}
+
+std::string crypt(std::string message)
+{
+    std::string c_message;
+    return c_message;
+}
+std::string authenticate(std::string certificate)
+{
+    std::string message;
+    return message;
 }

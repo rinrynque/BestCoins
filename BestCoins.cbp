@@ -44,7 +44,6 @@
 		</Linker>
 		<Unit filename="blockchain.cpp" />
 		<Unit filename="blockchain.h" />
-		<Unit filename="boost_serialization.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rsa.cpp" />
 		<Unit filename="rsa.h" />
