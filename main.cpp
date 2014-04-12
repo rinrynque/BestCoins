@@ -5,38 +5,45 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+
 int main(int argc, char **argv)
 {
     srand(time(NULL));
-    std::cout << "generating keys" << std::endl;
+
+
+
+
+    /*{
+
+    rsaPrivKey A;
+    rsaPubKey B;
+        std::cout << "generating keys\n" << std::endl;
+        rsaGenKeys(A, B);
+
+        std::ofstream ofs("lolkeys", std::ios::out | std::ios::binary);
+        boost::archive::binary_oarchive oa(ofs);
+        // write class instance to archive
+        oa << A << B;
+    	// archive and stream closed when destructors are called
+    }*/
 
     rsaPrivKey privKey;
     rsaPubKey pubKey;
+    mpz_class A(0);
+    privKey.setValue(A, A);
+    pubKey.setValue(A,A);
 
-    rsaGenKeys(privKey, pubKey);
-
-    std::ofstream ofs("lolkeys");
     {
-        std::cout << "lol ca plante pas\n" ;
-        boost::archive::text_oarchive oa(ofs);
-        // write class instance to archive
-        oa << privKey;
-    	// archive and stream closed when destructors are called
-    }
-    mpz_class A(6);
-    std::cout << "5:" << privKey.deCrypt(pubKey.crypt(5));
-    privKey.setValue(A, 0);
-    {
-        std::cout << "lol ca plante" ;
         // create and open an archive for input
-        std::ifstream ifs("lolkeys");
-        boost::archive::text_iarchive ia(ifs);
+        std::ifstream ifs("lolkeys", std::ios::in | std::ios::binary);
+        boost::archive::binary_iarchive ia(ifs);
         // read class state from archive
-        ia >> privKey;
+        ia >> privKey>> pubKey;
         // archive and stream closed when destructors are called
     }
-    /*std::cout << "\n Cle publique :" << privKey
-    << "\n Cle privee : " << pubKey;*/
+
     mpz_class M = 349;
     mpz_class C = pubKey.crypt(M);
 

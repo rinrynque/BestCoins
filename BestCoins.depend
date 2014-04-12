@@ -1,27 +1,24 @@
 # depslib dependency file v1.0
-1397219232 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
+1397320877 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
 	<time.h>
 	<fstream>
 	<iostream>
 	"rsa.h"
 	<stdio.h>
 	<string.h>
+	<boost/archive/binary_oarchive.hpp>
+	<boost/archive/binary_iarchive.hpp>
 
-1397218877 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
-	<gmpxx.h>
+1397315991 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
 	<stdio.h>
 	<cstdlib>
 	<string.h>
-	<boost/archive/text_oarchive.hpp>
-	<boost/archive/text_iarchive.hpp>
-	<boost/serialization/split_member.hpp>
+	<iostream>
 	<boost/serialization/base_object.hpp>
 	<boost/serialization/access.hpp>
-	<boost/serialization/array.hpp>
-	<boost/serialization/string.hpp>
 	<boost/serialization/gmpxx_boost_serialization.hpp>
 
-1397213945 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
+1397315991 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
 	"rsa.h"
 
 1295462035 c:\boost_1_55_0\boost\archive\text_oarchive.hpp
@@ -3020,7 +3017,8 @@
 	<iostream>
 	<gmpxx.h>
 
-1397218606 c:\boost_1_55_0\boost\serialization\gmpxx_boost_serialization.hpp
+1397320850 c:\boost_1_55_0\boost\serialization\gmpxx_boost_serialization.hpp
+	<gmpxx.h>
 	<boost/serialization/split_free.hpp>
 
 1397162568 c:\users\vianney\documents\perso\projets\bestcoins\boost_serialization.h
@@ -5536,4 +5534,101 @@
 1342377309 c:\boost_1_55_0\boost\serialization\detail\get_data.hpp
 	<vector>
 	<valarray>
+
+1259998321 c:\boost_1_55_0\boost\archive\binary_oarchive.hpp
+	<ostream>
+	<boost/config.hpp>
+	<boost/archive/binary_oarchive_impl.hpp>
+	<boost/archive/detail/register_archive.hpp>
+
+1259998321 c:\boost_1_55_0\boost\archive\binary_oarchive_impl.hpp
+	<ostream>
+	<boost/config.hpp>
+	<boost/serialization/pfto.hpp>
+	<boost/archive/basic_binary_oprimitive.hpp>
+	<boost/archive/basic_binary_oarchive.hpp>
+
+1295462035 c:\boost_1_55_0\boost\archive\basic_binary_oprimitive.hpp
+	<iosfwd>
+	<boost/assert.hpp>
+	<locale>
+	<streambuf>
+	<string>
+	<cstddef>
+	<boost/config.hpp>
+	<boost/cstdint.hpp>
+	<boost/integer.hpp>
+	<boost/integer_traits.hpp>
+	<boost/scoped_ptr.hpp>
+	<boost/serialization/throw_exception.hpp>
+	<boost/archive/basic_streambuf_locale_saver.hpp>
+	<boost/archive/archive_exception.hpp>
+	<boost/serialization/is_bitwise_serializable.hpp>
+	<boost/mpl/placeholders.hpp>
+	<boost/serialization/array.hpp>
+	<boost/archive/detail/auto_link_archive.hpp>
+	<boost/archive/detail/abi_prefix.hpp>
+	<boost/archive/detail/abi_suffix.hpp>
+
+1295462035 c:\boost_1_55_0\boost\archive\basic_binary_oarchive.hpp
+	<boost/assert.hpp>
+	<boost/config.hpp>
+	<boost/detail/workaround.hpp>
+	<boost/serialization/pfto.hpp>
+	<boost/integer.hpp>
+	<boost/integer_traits.hpp>
+	<boost/archive/detail/common_oarchive.hpp>
+	<boost/serialization/string.hpp>
+	<boost/serialization/collection_size_type.hpp>
+	<boost/serialization/item_version_type.hpp>
+	<boost/archive/detail/abi_prefix.hpp>
+	<boost/archive/detail/abi_suffix.hpp>
+
+1367168847 c:\boost_1_55_0\boost\archive\binary_iarchive.hpp
+	<istream>
+	<boost/archive/binary_iarchive_impl.hpp>
+	<boost/archive/detail/register_archive.hpp>
+	<boost/archive/shared_ptr_helper.hpp>
+
+1259998321 c:\boost_1_55_0\boost\archive\binary_iarchive_impl.hpp
+	<istream>
+	<boost/serialization/pfto.hpp>
+	<boost/archive/basic_binary_iprimitive.hpp>
+	<boost/archive/basic_binary_iarchive.hpp>
+
+1367168847 c:\boost_1_55_0\boost\archive\basic_binary_iprimitive.hpp
+	<iosfwd>
+	<boost/assert.hpp>
+	<locale>
+	<cstring>
+	<cstddef>
+	<streambuf>
+	<string>
+	<boost/config.hpp>
+	<boost/cstdint.hpp>
+	<boost/scoped_ptr.hpp>
+	<boost/serialization/throw_exception.hpp>
+	<boost/integer.hpp>
+	<boost/integer_traits.hpp>
+	<boost/archive/basic_streambuf_locale_saver.hpp>
+	<boost/archive/archive_exception.hpp>
+	<boost/mpl/placeholders.hpp>
+	<boost/serialization/is_bitwise_serializable.hpp>
+	<boost/serialization/array.hpp>
+	<boost/archive/detail/auto_link_archive.hpp>
+	<boost/archive/detail/abi_prefix.hpp>
+	<boost/archive/detail/abi_suffix.hpp>
+
+1303519398 c:\boost_1_55_0\boost\archive\basic_binary_iarchive.hpp
+	<boost/config.hpp>
+	<boost/detail/workaround.hpp>
+	<boost/serialization/pfto.hpp>
+	<boost/archive/basic_archive.hpp>
+	<boost/archive/detail/common_iarchive.hpp>
+	<boost/serialization/collection_size_type.hpp>
+	<boost/serialization/string.hpp>
+	<boost/serialization/item_version_type.hpp>
+	<boost/integer_traits.hpp>
+	<boost/archive/detail/abi_prefix.hpp>
+	<boost/archive/detail/abi_suffix.hpp>
 
