@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1397320877 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
+1398695647 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
 	<time.h>
 	<fstream>
 	<iostream>
@@ -9,16 +9,18 @@
 	<boost/archive/binary_oarchive.hpp>
 	<boost/archive/binary_iarchive.hpp>
 
-1397315991 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
+1397819115 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
 	<stdio.h>
 	<cstdlib>
-	<string.h>
+	<string>
 	<iostream>
+	<sstream>
 	<boost/serialization/base_object.hpp>
 	<boost/serialization/access.hpp>
 	<boost/serialization/gmpxx_boost_serialization.hpp>
+	<ctime>
 
-1397315991 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
+1398695688 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
 	"rsa.h"
 
 1295462035 c:\boost_1_55_0\boost\archive\text_oarchive.hpp

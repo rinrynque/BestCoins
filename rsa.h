@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <cstdlib>
-#include <string.h>
+#include <string>
 #include <iostream>
+#include <sstream>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/gmpxx_boost_serialization.hpp>
+#include <ctime>
 
 #define KEY_SIZE 1024 //en bits, à prendre supérieur à 512
-#define WORD_SIZE KEY_SIZE/16
-#define PRIM_SIZE KEY_SIZE/2
-typedef unsigned char byte;
+#define WORD_SIZE ((KEY_SIZE)/8-1)
+#define PRIM_SIZE (KEY_SIZE/2)
+
+typedef char byte;
 
 class rsaKey
 {

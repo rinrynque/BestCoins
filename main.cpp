@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
 
 
-    /*{
+    {
 
     rsaPrivKey A;
     rsaPubKey B;
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
         // write class instance to archive
         oa << A << B;
     	// archive and stream closed when destructors are called
-    }*/
+    }
 
     rsaPrivKey privKey;
     rsaPubKey pubKey;
@@ -46,10 +46,17 @@ int main(int argc, char **argv)
 
     mpz_class M = 349;
     mpz_class C = pubKey.crypt(M);
+    std::string str("lolilol test");
+    std::cout <<"\n0*127 : "<< 0*127
+    << "\n0*WORD_SIZE : "<< 0*(int)WORD_SIZE
+    << "\nWORD_SIZE : "<< WORD_SIZE*0;
 
     std::cout << "\n------------\nnombre a chiffrer : " << M << "\nnombre chiffre : " << C << "\ndechiffre : " << privKey.deCrypt(C);
     mpz_class S = privKey.sign(M);
     std::cout << "\n------------\nnombre a signer : " << M << "\nsignature : " << S << "\nverification : \n" << pubKey.authenticate(S);
+
+    str = pubKey.crypt(str);
+    privKey.deCrypt(str);
 
 	return 0;
 }
