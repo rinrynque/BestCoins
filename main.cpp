@@ -11,15 +11,11 @@
 int main(int argc, char **argv)
 {
     srand(time(NULL));
-
-
-
-
     {
 
     rsaPrivKey A;
     rsaPubKey B;
-        std::cout << "generating keys\n" << std::endl;
+        std::cout << "\ngenerating keys" << std::endl;
         rsaGenKeys(A, B);
 
         std::ofstream ofs("lolkeys", std::ios::out | std::ios::binary);
@@ -31,9 +27,6 @@ int main(int argc, char **argv)
 
     rsaPrivKey privKey;
     rsaPubKey pubKey;
-    mpz_class A(0);
-    privKey.setValue(A, A);
-    pubKey.setValue(A,A);
 
     {
         // create and open an archive for input
@@ -44,19 +37,14 @@ int main(int argc, char **argv)
         // archive and stream closed when destructors are called
     }
 
-    mpz_class M = 349;
-    mpz_class C = pubKey.crypt(M);
-    std::string str("lolilol test");
-    std::cout <<"\n0*127 : "<< 0*127
-    << "\n0*WORD_SIZE : "<< 0*(int)WORD_SIZE
-    << "\nWORD_SIZE : "<< WORD_SIZE*0;
+    mpz_class A("475612384651329864512864513246512846512346513286512346513264513246513486513");
+    std::cout <<"\n47 : " << privKey.deCrypt(pubKey.crypt(A));
 
-    std::cout << "\n------------\nnombre a chiffrer : " << M << "\nnombre chiffre : " << C << "\ndechiffre : " << privKey.deCrypt(C);
-    mpz_class S = privKey.sign(M);
-    std::cout << "\n------------\nnombre a signer : " << M << "\nsignature : " << S << "\nverification : \n" << pubKey.authenticate(S);
-
+    std::vector <byte> str;
+    for(int i = 0; i < WORD_SIZE_C; i++)
+        str.push_back('a');
     str = pubKey.crypt(str);
-    privKey.deCrypt(str);
+    str = privKey.deCrypt(str);
 
 	return 0;
 }

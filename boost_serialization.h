@@ -35,8 +35,6 @@
 // Boost.Serialization support for GMP classes
 # include <boost/serialization/split_free.hpp>
 
-BOOST_SERIALIZATION_SPLIT_FREE(__mpz_struct)
-BOOST_SERIALIZATION_SPLIT_FREE(__mpf_struct)
 
 namespace boost {
 namespace serialization {
@@ -58,14 +56,17 @@ namespace serialization {
     // do the POD part
     ar & z._mp_alloc & z._mp_size;
     // get ptrs to GMP memory management functions
-    void* (*alloc_func_ptr) (size_t);
-    void  (*free_func_ptr) (void *, size_t);
+    /*void* (*alloc_func_ptr) (size_t);
+    //void  (*free_func_ptr) (void *, size_t);
+    __gmp_freefunc_t free_func_ptr;
     mp_get_memory_functions(&alloc_func_ptr, NULL, &free_func_ptr);
     // free old memory
     if (original_limb_no != 0)
       (*free_func_ptr)(z._mp_d, original_limb_no);
     // make room for arriving limbs
-    z._mp_d = static_cast<mp_limb_t*>((*alloc_func_ptr)(z._mp_alloc));
+    z._mp_d = static_cast<mp_limb_t*>((*alloc_func_ptr)(z._mp_alloc));*/
+    mpz_realloc(&z, z._mp_alloc);
+
     // now serialize the limbs array
     mp_limb_t *limbp = z._mp_d;
     for (int i = 0; i < z._mp_alloc; ++i) {
@@ -155,6 +156,8 @@ namespace serialization {
 } // namespace serialization
 } // namespace boost
 
+BOOST_SERIALIZATION_SPLIT_FREE(__mpz_struct)
+BOOST_SERIALIZATION_SPLIT_FREE(__mpf_struct)
 
 
 #endif // GMPXX_BOOST_SERIALIZATION_HPP

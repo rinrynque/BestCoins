@@ -1,5 +1,6 @@
 #include "rsa.h"
 
+
 rsaKey::rsaKey()
 {
     mod =0 ;
@@ -32,7 +33,7 @@ void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey)
     mpz_nextprime(Q.get_mpz_t(), Q.get_mpz_t());
 
     N = P * Q;
-    }while(mpz_sizeinbase(N.get_mpz_t(), 2)/8 > WORD_SIZE );
+    }while(mpz_sizeinbase(N.get_mpz_t(), 2) != KEY_SIZE );
 
     phi = (P-1)*(Q-1);
 
@@ -51,7 +52,7 @@ void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey)
 
     pubKey.setValue(D,N);
     privKey.setValue(E,N);
-    std::cout << "\n longueur en bits du module des cles :" << mpz_sizeinbase(N.get_mpz_t(), 2);
+    std::cout << "\nlongueur en bits du module des cles :" << mpz_sizeinbase(N.get_mpz_t(), 2);
 }
 
 mpz_class rsaPubKey::crypt(const mpz_class M)
@@ -84,55 +85,67 @@ mpz_class rsaPubKey::authenticate(const mpz_class S)
 }
 
 
-std::string rsaPrivKey::deCrypt(std::string c_message)
-{
-    mpz_class numb(0);
-    std::string d_message;
-    std::cout << "\ndechiffre : "<< c_message;
-    for(int i = 0; i < c_message.length()/WORD_SIZE+1; i++)
+    byte*  crypt(byte*  message)
     {
-        char word[WORD_SIZE]= "";
-        strcpy(word,(c_message.substr(i*WORD_SIZE, WORD_SIZE)).data());
-        std::cout << "i : " << i << " word : " << word;
-
-        size_t len = c_message.substr(i*WORD_SIZE, WORD_SIZE).length();
-        mpz_import (numb.get_mpz_t(), 1, 1, len, 1, 0, word);
-
-        numb = deCrypt(numb);
-        mpz_export (word, NULL, 1,WORD_SIZE, 1, 0, numb.get_mpz_t());
-        d_message.append(word, WORD_SIZE);
-    }
-    std::cout << "\nfin dechiffre : " << d_message;
-    return d_message;
-}
-
-std::string rsaPrivKey::sign(std::string message)
-{
-    std::string certificate;
-    return certificate;
-}
-
-std::string rsaPubKey::crypt(std::string message)
-{
-    mpz_class numb(0);
-    std::string c_message;
-    std::cout << "\nchiffre : "<< message;
-    for(int i = 0; i < c_message.length()/WORD_SIZE+1; i++)
+        return c_message;
+    } //message doit faire WORD_SIZE de long
+    byte*  authenticate(byte*  certificate)
     {
-        char word[WORD_SIZE]= "";
-        strcpy(word,(message.substr(i*WORD_SIZE, WORD_SIZE)).data());
-        size_t len = message.substr(i*WORD_SIZE, WORD_SIZE).length();
-        std::cout << "\n" << word;
-        mpz_import (numb.get_mpz_t(), 1, 1, len, 1, 0, word);
-        numb = crypt(numb);
-        mpz_export (word, NULL, 1,WORD_SIZE, 1, 0, numb.get_mpz_t());
-        c_message.append(word, WORD_SIZE);
+        return NULL;
     }
-    std::cout << "\nfin chiffre : "<< c_message.length() << c_message;
+
+    byte*  deCrypt(byte*  c_message)
+    {
+        return message;
+    } //c_message doit faire WORD_SIZE_C de long
+    byte* sign(byte*  message)
+    {
+        return NULL;
+    }
+
+std::vector <byte> rsaPubKey::crypt(std::vector <byte> message)
+{
+    std::cout << "\nmessage en clair :"<< std::string(&message[0], message.size());
+    mpz_class numb;
+    mpz_import(numb.get_mpz_t(), WORD_SIZE, -1, 1, -1, 0, &message[0]);
+    numb = crypt(numb);
+    byte* data = new byte[WORD_SIZE_C]();
+    mpz_export(data, NULL, -1,1,-1,0,numb.get_mpz_t());
+
+    std::vector <byte> c_message;
+    for (int i = 0; i < WORD_SIZE_C; i++)
+        c_message.push_back(data[i]);
+    std::cout << "\n crypte : " << std::string(data, WORD_SIZE_C);
+    std::cout << "\n crypte & stocke : " << std::string(&c_message[0], WORD_SIZE);
+
     return c_message;
 }
-std::string rsaPubKey::authenticate(std::string certificate)
+std::vector <byte> rsaPrivKey::deCrypt(std::vector <byte> c_message)
 {
-    std::string message;
+    mpz_class numb;
+    mpz_import(numb.get_mpz_t(), WORD_SIZE_C, -1,1,-1,0, &c_message[0]);
+    numb = deCrypt(numb);
+
+    byte* data = new byte[WORD_SIZE]();
+    mpz_export(data, NULL, -1,1,-1,0,numb.get_mpz_t());
+    std::vector <byte> message;
+    for(int i = 0; i < WORD_SIZE; i++)
+        message.push_back(data[i]);
+
+    std::cout << "\n decrypte & stocke : " << std::string(&message[0], WORD_SIZE);
     return message;
 }
+
+
+
+std::vector <byte> rsaPrivKey::sign(std::vector <byte> message)
+{
+    std::vector <byte> certificate;
+    return certificate;
+}
+std::vector <byte> rsaPubKey::authenticate(std::vector <byte> certificate)
+{
+    std::vector <byte> message;
+    return message;
+}
+

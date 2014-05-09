@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1398695647 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
+1399631602 source:c:\users\vianney\documents\perso\projets\bestcoins\main.cpp
 	<time.h>
 	<fstream>
 	<iostream>
@@ -9,7 +9,7 @@
 	<boost/archive/binary_oarchive.hpp>
 	<boost/archive/binary_iarchive.hpp>
 
-1397819115 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
+1399633401 c:\users\vianney\documents\perso\projets\bestcoins\rsa.h
 	<stdio.h>
 	<cstdlib>
 	<string>
@@ -17,10 +17,12 @@
 	<sstream>
 	<boost/serialization/base_object.hpp>
 	<boost/serialization/access.hpp>
-	<boost/serialization/gmpxx_boost_serialization.hpp>
+	"boost_serialization.h"
 	<ctime>
+	<cassert>
+	<vector>
 
-1398695688 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
+1399631474 source:c:\users\vianney\documents\perso\projets\bestcoins\rsa.cpp
 	"rsa.h"
 
 1295462035 c:\boost_1_55_0\boost\archive\text_oarchive.hpp
@@ -3023,7 +3025,7 @@
 	<gmpxx.h>
 	<boost/serialization/split_free.hpp>
 
-1397162568 c:\users\vianney\documents\perso\projets\bestcoins\boost_serialization.h
+1398702251 c:\users\vianney\documents\perso\projets\bestcoins\boost_serialization.h
 	<gmpxx.h>
 	<boost/serialization/split_free.hpp>
 
