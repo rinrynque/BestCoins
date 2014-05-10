@@ -7,6 +7,11 @@
 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
+inline void ecrire (std::vector <byte> str)
+{
+        for(int i = 0; i < str.size(); i++)
+            std::cout << str[i];
+}
 
 int main(int argc, char **argv)
 {
@@ -37,14 +42,25 @@ int main(int argc, char **argv)
         // archive and stream closed when destructors are called
     }
 
-    mpz_class A("475612384651329864512864513246512846512346513286512346513264513246513486513");
-    std::cout <<"\n47 : " << privKey.deCrypt(pubKey.crypt(A));
-
     std::vector <byte> str;
-    for(int i = 0; i < WORD_SIZE_C; i++)
-        str.push_back('a');
-    str = pubKey.crypt(str);
+    byte* rstr = "lolilol j ecris n";
+    std::cout << "\nmessage de base : ";
+    for(int i = 0; rstr[i] != '\0'; i++)
+        {str.push_back(rstr[i]); std::cout<<rstr[i];}
+
+    str = pubKey.enCrypt(str);
+    std::cout << "\nChiffrement : ";
+    ecrire(str);
     str = privKey.deCrypt(str);
+    std::cout << "\ndechiffre : ";
+    ecrire(str);
+
+    std::cout << "\n\n\nSignature : ";
+    str = privKey.deCrypt(str);
+    ecrire(str);
+    str = pubKey.enCrypt(str);
+    std::cout << "\nVerification : ";
+    ecrire(str);
 
 	return 0;
 }
