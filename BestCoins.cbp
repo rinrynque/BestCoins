@@ -38,13 +38,18 @@
 		<Linker>
 			<Add option="-lgmpxx" />
 			<Add option="-lgmp" />
-			<Add option="-ldb-6.0" />
+			<Add option="-ldb_cxx" />
 			<Add option="-lboost_serialization" />
 			<Add directory="C:/db-6.0.30.NC/build_unix/.libs" />
 		</Linker>
 		<Unit filename="blockchain.cpp" />
 		<Unit filename="blockchain.h" />
+		<Unit filename="header.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="md5.cpp" />
+		<Unit filename="md5.h" />
+		<Unit filename="protocol.cpp" />
+		<Unit filename="protocol.h" />
 		<Unit filename="rsa.cpp" />
 		<Unit filename="rsa.h" />
 		<Extensions>

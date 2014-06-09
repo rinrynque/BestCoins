@@ -1,6 +1,5 @@
 #include "rsa.h"
 
-
 rsaKey::rsaKey()
 {
     mod =0 ;
@@ -70,63 +69,83 @@ mpz_class rsaPrivKey::deCrypt(const mpz_class C)
     return M;
 }
 
-byte* rsaPubKey::enCrypt(byte*  message)
+rsaCData rsaPubKey::enCrypt(std::vector <byte> message)
 {
-    mpz_class numb;
-    mpz_import(numb.get_mpz_t(), WORD_SIZE, -1, 1, -1, 0, message);
-    numb = enCrypt(numb);
-
-    byte* data = new byte[WORD_SIZE_C]();
-    mpz_export(data, NULL, -1,1,-1,0,numb.get_mpz_t());
-
-    return data;
-} //message doit faire WORD_SIZE de long
-
-
-byte*  rsaPrivKey::deCrypt(byte*  c_message)
-{
-    mpz_class numb;
-    mpz_import(numb.get_mpz_t(), WORD_SIZE_C, -1, 1, -1, 0, c_message);
-    numb = deCrypt(numb);
-
-    byte* data = new byte[WORD_SIZE]();
-    mpz_export(data, NULL, -1,1,-1,0,numb.get_mpz_t());
-
-    return data;
-}
-
-std::vector <byte> rsaPubKey::enCrypt(std::vector <byte> message)
-{
-    std::vector <byte> c_message;
-    while(message.size()%WORD_SIZE!=0)
+    rsaCData c_message;
+    c_message.length = message.size();
+    while(message.size()%WORD_SIZE != 0)
         message.push_back(0);
 
     for(int i = 0; i < message.size()/WORD_SIZE; i++)
     {
-        byte* data = enCrypt(&message[i*WORD_SIZE]);
-        for (int j = 0; j < WORD_SIZE_C; j++)
-            c_message.push_back(data[j]);
+        mpz_class numb;
+        mpz_import(numb.get_mpz_t(), WORD_SIZE, -1, 1, -1, 0, &(message[i*WORD_SIZE]));
+        c_message.data.push_back(enCrypt(numb));
     }
-    while(c_message.size() != 0 && c_message[c_message.size()-1] == 0)
-        c_message.pop_back();
+
     return c_message;
 }
-std::vector <byte> rsaPrivKey::deCrypt(std::vector <byte> c_message)
+std::vector <byte> rsaPrivKey::deCrypt(rsaCData c_message)
 {
-    while(c_message.size()%WORD_SIZE_C!=0)
-        c_message.push_back(0);
-
     std::vector <byte> message;
-    for (int i = 0; i < c_message.size()/WORD_SIZE_C; i++)
-    {
 
-        byte* data = deCrypt(&c_message[i*WORD_SIZE_C]);
+    for (int i = 0; i < c_message.data.size(); i++)
+    {
+        mpz_class numb = deCrypt(c_message.data[i]);
+
+        byte* data = new byte[WORD_SIZE]();
+        size_t len;
+        mpz_export(data, &len, -1,1,-1,0,numb.get_mpz_t());
+        if(len > WORD_SIZE)
+            std::cout << "\nalerte 2 " << len << ":" << WORD_SIZE;
+
         for(int j = 0; j < WORD_SIZE; j++)
             message.push_back(data[j]);
-
+        delete data;
     }
-    while(message.size() != 0 && message[message.size()-1] == 0)
+    while(message.size() > c_message.length)
         message.pop_back();
 
     return message;
+}
+
+std::vector <byte>  rsaPubKey::verify(rsaCData  c_message)
+{
+    std::vector <byte> message;
+
+    for (int i = 0; i < c_message.data.size(); i++)
+    {
+        mpz_class numb = enCrypt(c_message.data[i]);
+
+        byte* data = new byte[WORD_SIZE]();
+        size_t len;
+        mpz_export(data, &len, -1,1,-1,0,numb.get_mpz_t());
+        if(len > WORD_SIZE)
+            std::cout << "\nalerte 2 " << len << ":" << WORD_SIZE;
+
+        for(int j = 0; j < WORD_SIZE; j++)
+            message.push_back(data[j]);
+        delete data;
+    }
+    while(message.size() > c_message.length)
+        message.pop_back();
+
+    return message;
+}
+
+rsaCData  rsaPrivKey::sign(std::vector <byte>  message)
+{
+    rsaCData c_message;
+    c_message.length = message.size();
+    while(message.size()%WORD_SIZE != 0)
+        message.push_back(0);
+
+    for(int i = 0; i < message.size()/WORD_SIZE; i++)
+    {
+        mpz_class numb;
+        mpz_import(numb.get_mpz_t(), WORD_SIZE, -1, 1, -1, 0, &(message[i*WORD_SIZE]));
+        c_message.data.push_back(deCrypt(numb));
+    }
+
+    return c_message;
 }

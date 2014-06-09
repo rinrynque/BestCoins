@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <cstdlib>
-#include <string>
+#pragma once
 #include <iostream>
-#include <sstream>
-#include <boost/serialization/base_object.hpp>
-#include <boost/serialization/access.hpp>
-#include "boost_serialization.h"
 #include <ctime>
-#include <cassert>
 #include <vector>
-
+#include <string>
+#include "boost_serialization.h"
 
 #define KEY_SIZE 1024 //en bits, à prendre supérieur à 512
 #define WORD_SIZE_C ((KEY_SIZE)/8)
@@ -17,6 +11,12 @@
 #define PRIM_SIZE (KEY_SIZE/2)
 
 typedef char byte;
+
+struct rsaCData
+{
+    uint32_t length;
+    std::vector <mpz_class> data;
+};
 
 class rsaKey
 {
@@ -44,16 +44,18 @@ class rsaPrivKey : public rsaKey
 {
 public :
     mpz_class deCrypt(mpz_class C);
-    byte*  deCrypt(byte*  c_message); //c_message doit faire WORD_SIZE_C de long
-    std::vector <byte>  deCrypt(std::vector <byte>  c_message);
+    std::vector <byte>  deCrypt(rsaCData  c_message);
+    rsaCData  sign(std::vector <byte>  c_message);
+   // rsaCData  sign(std::vector <byte>  message);
 };
 
 class rsaPubKey : public rsaKey
 {
 public:
     mpz_class enCrypt(mpz_class M);
-    byte*  enCrypt(byte*  message); //message doit faire WORD_SIZE de long
-    std::vector <byte>  enCrypt(std::vector <byte>  message);
+    rsaCData  enCrypt(std::vector <byte>  message);
+    std::vector <byte>  verify(rsaCData  message);
+    //std::vector <byte>  verify(rsaCData  certificate);
 };
 
 void rsaGenKeys(rsaPrivKey& privKey, rsaPubKey& pubKey);

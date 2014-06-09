@@ -1,47 +1,37 @@
-#ifndef BLOCKCHAIN_H_INCLUDED
-#define BLOCKCHAIN_H_INCLUDED
+#pragma once
 
-#include <vector>
-#include <iostream>
 #include <gmpxx.h>
+#include <db_cxx.h>
+#include <string>
+#include <sstream>
 
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
-struct OutPoint
+#include "protocol.h"
+#include "rsa.h"
+#include "md5.h"
+
+//std::string serializedString (const rsaPubKey object);
+template<typename type> std::string serializedString (const type object);
+template<typename type> std::string serializedString (const type object)
 {
-    uint64_t txHash;
-    uint32_t index;
-};
+    std::stringstream stream;
+    boost::archive::text_oarchive oa(stream);
+    oa << object;
+    return stream.str();
+}
 
-struct Tx_in
+class BlockChain
 {
-    OutPoint previous_output; //le lien vers l'output (ie l'endroit ou est le grisbi)
-    mpz_class sig; /*la signature (cf algorithme RSA) qui prouve que l'envoyeur
-    (de la transaction dans laquelle l'input se trouve) a le droit d'utiliser le grisbi en question*/
+public:
+    BlockChain();
+    ~BlockChain();
+
+//    bool validateTx(Tx);
+    bool validateBlock();
+    void open();
+
+private:
+    Db blockChain;
 };
-
-struct Tx_out
-{
-    int64_t value; // valeur de l'output, en 'satoshi' (ie la quantité de grisbi contenue dans l'output)
-    mpz_class pubKey;
-};
-
-struct Tx
-{
-    bool validate();
-
-    std::vector <Tx_in> inputs;
-    std::vector <Tx_out> outputs;
-
-};
-
-struct Block
-{
-    bool validate();
-
-    uint64_t prevHash;
-    uint32_t timestamp;
-    uint32_t nonce;
-    std::vector <Tx> txns;
-};
-
-#endif // BLOCKCHAIN_H_INCLUDED

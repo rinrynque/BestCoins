@@ -1,12 +1,6 @@
-#include <time.h>
-#include <fstream>
-#include <iostream>
-#include "rsa.h"
-#include <stdio.h>
-#include <string.h>
+#include "header.h"
+#include "blockchain.h"
 
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
 inline void ecrire (std::vector <byte> str)
 {
         for(int i = 0; i < str.size(); i++)
@@ -41,26 +35,29 @@ int main(int argc, char **argv)
         ia >> privKey>> pubKey;
         // archive and stream closed when destructors are called
     }
+    int A = 349;
 
-    std::vector <byte> str;
-    byte* rstr = "lolilol j ecris n";
-    std::cout << "\nmessage de base : ";
-    for(int i = 0; rstr[i] != '\0'; i++)
-        {str.push_back(rstr[i]); std::cout<<rstr[i];}
 
-    str = pubKey.enCrypt(str);
-    std::cout << "\nChiffrement : ";
-    ecrire(str);
-    str = privKey.deCrypt(str);
-    std::cout << "\ndechiffre : ";
-    ecrire(str);
+    std::cout << "int : "  << serializedString(A) << "\nKey" << serializedString(pubKey);
 
-    std::cout << "\n\n\nSignature : ";
-    str = privKey.deCrypt(str);
-    ecrire(str);
-    str = pubKey.enCrypt(str);
-    std::cout << "\nVerification : ";
-    ecrire(str);
+    std::vector <byte> message;
+    char* text = "Brett: He... he's black... \nJules: Go on...\nBrett: He's bald\nJules: Does he look like a bitch?\nBrett: What?\nJules: [Shoots Brett in the shoulder] DOES HE LOOK LIKE A BITCH?\nBrett: No!\nJules: Then why you try to fuck him like a bitch?\nBrett: I didn't...\nJules: Yes you did. Yes you did! You tried to fuck him. And Marcellus Wallace don't like to be fucked by anybody except Mrs. Wallace.";
+    //char* text = "hello";
+    for(int i = 0; text[i] != '\0'; i++)
+        message.push_back(text[i]);
+    /*for(int i = 0; i<WORD_SIZE; i++)
+        message.data.push_back('a');*/
+    /*std::cout << "\nCoder\nI : ";
+    ecrire(message);
+    std::cout << "\nO : ";
+    ecrire( privKey.deCrypt(pubKey.enCrypt(message)));*/
+
+    std::cout << "\nSigner\nI : ";
+    ecrire(message);
+    std::cout << "\nO : ";
+    ecrire(pubKey.verify(privKey.sign(message)));
+    MD5 md5Hash;
+    std::cout << "\nHash md5 : " << md5Hash(message.data(), message.size());
 
 	return 0;
 }
